@@ -2,36 +2,104 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ses Dosyasını Metne Çevir</title>
+<style>
+  body {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 2em;
+    text-align: center;
+  }
+  h2 {
+    font-size: 3em;
+    margin-bottom: 0.3em;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
+  input[type="file"] {
+    font-size: 1.3em;
+    margin: 1.2em 0;
+    padding: 0.4em;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+  }
+  button {
+    background-color: #ff9800;
+    border: none;
+    padding: 1em 2.5em;
+    font-size: 1.5em;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #222;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #e67e00;
+  }
+  #result {
+    margin-top: 2em;
+    background-color: rgba(255, 255, 255, 0.15);
+    padding: 1.5em;
+    border-radius: 15px;
+    font-size: 1.4em;
+    min-height: 180px;
+    white-space: pre-wrap;
+    user-select: text;
+    box-shadow: 0 0 10px rgba(0,0,0,0.25);
+  }
+  .alert-box {
+    background-color: rgba(255, 69, 58, 0.9);
+    padding: 1em 1.5em;
+    border-radius: 12px;
+    margin-top: 1.8em;
+    font-size: 1.3em;
+    font-weight: 600;
+    box-shadow: 0 0 15px rgba(255, 69, 58, 0.8);
+  }
+</style>
 </head>
 <body>
 
-<h2>Ses Dosyasını Metne Çevir (Sınırlı Basit Demo)</h2>
+<h2>Ses Dosyasını Metne Çevir</h2>
 
 <input type="file" id="audioFile" accept="audio/*" />
+<br />
 <button id="convertBtn">Dönüştür</button>
 
-<pre id="result" style="white-space: pre-wrap; border: 1px solid #ccc; padding: 10px; min-height: 150px;"></pre>
+<div id="result"></div>
+
+<div class="alert-box" id="alertBox" style="display:none;"></div>
 
 <script>
-  // Bu demo, web tarayıcısının native speech recognition'u doğrudan dosyadan yapamaz.
-  // Yani JS ile doğrudan dosyayı yazıya çevirmek mümkün değil.
-  // Bunun için sunucu tarafı veya dış API gerekir.
-
-  // Burada sadece ses dosyası seçimi gösteriliyor.
-  // Dönüştür düğmesine basınca "Bu demo sadece gösterim amaçlıdır." mesajı verir.
-
   const convertBtn = document.getElementById('convertBtn');
   const result = document.getElementById('result');
+  const alertBox = document.getElementById('alertBox');
 
   convertBtn.addEventListener('click', () => {
     const fileInput = document.getElementById('audioFile');
     if (!fileInput.files.length) {
-      alert('Lütfen bir ses dosyası seçin.');
+      alertBox.style.display = 'block';
+      alertBox.textContent = "Lütfen önce bir ses dosyası seçin.";
+      result.textContent = "";
       return;
     }
-    result.textContent = "Demo: Ses dosyasını yazıya çevirmek için sunucu tarafı işleme gerek.\n" +
-                         "Telefon veya bilgisayar için önerilen uygulamalardan birini kullanınız.";
+
+    alertBox.style.display = 'block';
+    alertBox.style.backgroundColor = "rgba(255, 165, 0, 0.9)";
+    alertBox.style.boxShadow = "0 0 15px rgba(255, 165, 0, 0.8)";
+    alertBox.textContent = "Üzgünüz, tarayıcıda ses dosyasını otomatik metne dönüştürmek mümkün değil. " + 
+                         "Bu işlem için sunucu tarafında özel yazılımlar veya bulut servisleri gerekir.\n\n" +
+                         "Telefon veya bilgisayarınızda aşağıdaki uygulamalardan birini kullanmanızı öneririz:\n" +
+                         "- Otter.ai\n" +
+                         "- Veed.io\n" +
+                         "- Temi\n" +
+                         "- Google Cloud Speech-to-Text (teknik)\n\n" +
+                         "İsterseniz Python + Flask ile çalışan bir sunucu uygulaması da yapabiliriz.";
+
+    result.textContent = "";
   });
 </script>
 
