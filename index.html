@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<title>Ses Dosyasını Metne Çevir</title>
+</head>
+<body>
+
+<h2>Ses Dosyasını Metne Çevir (Sınırlı Basit Demo)</h2>
+
+<input type="file" id="audioFile" accept="audio/*" />
+<button id="convertBtn">Dönüştür</button>
+
+<pre id="result" style="white-space: pre-wrap; border: 1px solid #ccc; padding: 10px; min-height: 150px;"></pre>
+
+<script>
+  // Bu demo, web tarayıcısının native speech recognition'u doğrudan dosyadan yapamaz.
+  // Yani JS ile doğrudan dosyayı yazıya çevirmek mümkün değil.
+  // Bunun için sunucu tarafı veya dış API gerekir.
+
+  // Burada sadece ses dosyası seçimi gösteriliyor.
+  // Dönüştür düğmesine basınca "Bu demo sadece gösterim amaçlıdır." mesajı verir.
+
+  const convertBtn = document.getElementById('convertBtn');
+  const result = document.getElementById('result');
+
+  convertBtn.addEventListener('click', () => {
+    const fileInput = document.getElementById('audioFile');
+    if (!fileInput.files.length) {
+      alert('Lütfen bir ses dosyası seçin.');
+      return;
+    }
+    result.textContent = "Demo: Ses dosyasını yazıya çevirmek için sunucu tarafı işleme gerek.\n" +
+                         "Telefon veya bilgisayar için önerilen uygulamalardan birini kullanınız.";
+  });
+</script>
+
+</body>
+</html>
